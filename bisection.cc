@@ -2,15 +2,20 @@ using namespace std;
 #include <iostream>
 #include <cmath>
 
-float function (float x){
-    return (2*pow(x,4) + pow(x,3) - 8*pow(x,2) - x + 6)/(x+2);
+ int iteration; // Variable para contar el numero de iteraciones realizadas
+
+double function (double x){ //
+    return (2*pow(x,2)+3*x);
 }
 
-float root(float x1, float x2){
-    float l = function(x1);
-    float r = function(x2);
-    float mid = (x1+x2)/2;
-    
+double bisection(double x1, double x2){
+    double l = function(x1);
+    double mid = (x1+x2) * .5;
+    double r = function(x2);
+
+// condition ? value_if_true : value_if_false 
+
+
     if (function(mid)==0){
         return mid;
     }
@@ -21,24 +26,32 @@ float root(float x1, float x2){
     
     else if (l*r<0){
         if (l >= -.0000000000001 && l <= .0000000000001 && r >= -.0000000000001 && r <= .0000000000001){
+            //std::cout<< "Iteration Number: "+ iteration;
             return mid;
         } 
         else{
             if(l*function(mid)<0){
-                return root(x1, mid);
+                //iteration++;
+                //std::cout<< "Iteration Number: ";
+                //std::cout<< iteration;
+                return bisection(x1, mid);
             }
-            else if((function(mid)*r)<0){
-                return root(mid, x2);
+            else if((r*function(mid))<0){
+                //iteration++;
+                //std::cout<< "Iteration Number: ";
+                //std::cout<< iteration;
+                return bisection(mid, x2);
             }
         }
-        std::cout<< ": yup";
+        std::cout<< "";
     }
     else{
-        std::cout << std::endl <<"intersection not found, there must be more than 1";
-        return -1;
+        std::cout << std::endl <<"No root found. Function might not be continous. \n";
+        return -1.00;
     }
 }
 
 int main (){
-    std::cout << std::endl << "root: "<< root(-4,0);
+    std::cout << "Results: \n ";
+    std::cout << "X1: "<< bisection(-3,0);
 }
